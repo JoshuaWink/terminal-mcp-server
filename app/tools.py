@@ -44,15 +44,27 @@ def _pty_reader(pty_id: str, master_fd: int, stop_event: threading.Event, buffer
 
 
 def register_tools(server):
-    @server.tool(name="terminal_create", description="Create a terminal (pty-backed). Returns terminal id.")
-    def terminal_create(name: str = None, payload: dict = None) -> str:
+    @server.tool(name="terminal_create", description="Create a terminal (pty-backed). Returns terminal id and cwd.")
+    def terminal_create(name: str = None, cwd: str = None, payload: dict = None) -> str:
         if payload and isinstance(payload, dict):
             name = payload.get('name', name)
+            cwd = payload.get('cwd', cwd)
         term_name = name or f"mcp-terminal-{int(__import__('time').time())}"
+        # default to the user's home directory if cwd not provided
+        if not cwd:
+            try:
+                cwd = os.path.expanduser('~')
+            except Exception:
+                cwd = None
         try:
             master_fd, slave_fd = os.openpty()
             shell = os.environ.get('SHELL', '/bin/sh') if os.name != 'nt' else (os.environ.get('ComSpec', 'cmd.exe'))
-            proc = subprocess.Popen([shell], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd, close_fds=True)
+            # Start the shell with the requested working directory when possible
+            try:
+                proc = subprocess.Popen([shell], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd, close_fds=True, cwd=cwd)
+            except TypeError:
+                # some platforms or older Python versions may not accept cwd for Popen with file descriptors
+                proc = subprocess.Popen([shell], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd, close_fds=True)
             os.close(slave_fd)
             lid = term_name if term_name else f"local-pty-{uuid.uuid4().hex[:8]}"
             buf = []
@@ -66,9 +78,11 @@ def register_tools(server):
                 'buffer': buf,
                 'lock': lock,
                 'stop': stop_ev,
-                'thread': th
+                'thread': th,
+                'cwd': cwd
             }
-            return lid
+            # Always return a JSON object with terminalId and cwd
+            return json.dumps({'terminalId': lid, 'cwd': cwd})
         except Exception:
             return term_name
 
@@ -77,17 +91,45 @@ def register_tools(server):
         if payload and isinstance(payload, dict):
             terminalId = payload.get('terminalId', terminalId)
             text = payload.get('text', text)
-        if not terminalId or text is None:
-            return 'Error: terminalId and text required'
+        # Require text for all sends
+        if text is None:
+            return 'Error: text required'
+
+        created_new = False
+        # If no terminalId supplied, create a new local pty and use it
+        if not terminalId:
+            try:
+                created = terminal_create()
+                created_new = True
+                # terminal_create may return JSON or a plain id; handle both
+                try:
+                    created_obj = json.loads(created)
+                    terminalId = created_obj.get('terminalId', created)
+                except Exception:
+                    terminalId = created
+            except Exception:
+                return 'Error: failed to create terminal'
+
         if terminalId in _local_ptys:
             try:
                 m = _local_ptys[terminalId]
                 to_write = text if text.endswith('\n') else text + '\n'
                 os.write(m['master_fd'], to_write.encode())
+                # If we created the terminal for this send, return the new id in JSON
+                if created_new:
+                    try:
+                        return json.dumps({'terminalId': terminalId, 'status': 'created', 'cwd': m.get('cwd')})
+                    except Exception:
+                        return terminalId
                 return ''
             except Exception as e:
                 return str(e)
-        return ''
+        # If terminal not found, return an error
+        return 'Error: terminal not found'
+    
+    @server.tool(name="runCommand", description="Send text to a terminal (pty). Non-blocking.")
+    def runCommand(terminalId: str = None, text: str = None, payload: dict = None) -> str:
+        return terminal_send(terminalId, text, payload)
 
     @server.tool(name="terminal_read", description="Read buffered output from a pseudoterminal created by terminal_create.")
     def terminal_read(terminalId: str = None, payload: dict = None) -> str:
@@ -225,7 +267,7 @@ def register_tools(server):
                         buf_len = sum(len(s) for s in m.get('buffer', []))
                 except Exception:
                     buf_len = None
-                results.append({'id': tid, 'type': 'pty', 'pid': pid, 'buffer_chars': buf_len})
+                results.append({'id': tid, 'type': 'pty', 'pid': pid, 'buffer_chars': buf_len, 'cwd': m.get('cwd')})
             return json.dumps(results)
         except Exception:
             return '[]'
