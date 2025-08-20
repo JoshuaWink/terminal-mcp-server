@@ -6,39 +6,169 @@ interrupt, clear, dispose, list.
 
 import os
 import select
+import signal
 import threading
+import time
 import uuid
 import subprocess
 import json
 import re
+from collections import deque
+from datetime import datetime
+import hashlib
 
 _local_ptys = {}
 _MAX_BUFFER_CHARS = 200000
+_EVENT_DEQUE_MAX = 2000
+
+# Event log configuration: write newline-delimited JSON events to a local file.
+# Can be disabled by setting TERMINAL_MCP_EVENT_LOG_ENABLED=0 in the env.
+# default event log stored inside the repository under .terminal-mcp/events.log
+_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+_EVENT_LOG_DIR = os.environ.get('TERMINAL_MCP_EVENT_DIR', os.path.join(_REPO_ROOT, '.terminal-mcp'))
+_EVENT_LOG_FILE = os.environ.get('TERMINAL_MCP_EVENT_LOG', os.path.join(_EVENT_LOG_DIR, 'events.log'))
+_EVENT_LOG_ENABLED = os.environ.get('TERMINAL_MCP_EVENT_LOG_ENABLED', '1') == '1'
+
+# in-memory recent events for poll-style queries
+_recent_events = deque(maxlen=_EVENT_DEQUE_MAX)
+
+# lightweight word lists used to create deterministic human-friendly ids
+# picked by indices derived from the current timestamp (time_ns) so rapid
+# calls still vary.
+ADJECTIVES = [
+    'quick', 'brave', 'clever', 'rusty', 'silent', 'golden', 'husky', 'lucky', 'fuzzy', 'bright', 'calm', 'sly'
+]
+
+NOUNS = [
+    'fox', 'otter', 'panda', 'tiger', 'beetle', 'hawk', 'lark', 'walrus', 'badger', 'otter', 'koala', 'moose'
+]
 
 
-def _pty_reader(pty_id: str, master_fd: int, stop_event: threading.Event, buffer: list, lock: threading.Lock):
+def _generate_name(seed: int = None) -> str:
+    """Return a deterministic "mcp-<adj>-<noun>" name derived from seed/time.
+
+    If seed is None the function uses time.time_ns() so names change rapidly.
+    """
+    if seed is None:
+        seed = time.time_ns()
     try:
-        while not stop_event.is_set():
-            r, _, _ = select.select([master_fd], [], [], 0.1)
-            if master_fd in r:
-                try:
-                    data = os.read(master_fd, 4096)
-                except OSError:
-                    break
-                if not data:
-                    break
-                text = data.decode(errors='replace')
-                with lock:
-                    buffer.append(text)
+        a = ADJECTIVES[seed % len(ADJECTIVES)]
+        b = NOUNS[(seed >> 16) % len(NOUNS)]
+        return f"[mcp] {a}-{b}"
+    except Exception:
+        # fallback to numeric timestamp-like id
+        return f"[mcp]-{int(time.time() * 1000)}"
+
+
+def _now_ts():
+    return datetime.utcnow().isoformat() + 'Z'
+
+
+def _write_event_to_log(ev: dict) -> None:
+    if not _EVENT_LOG_ENABLED:
+        return
+    try:
+        os.makedirs(_EVENT_LOG_DIR, exist_ok=True)
+        # ensure a compact JSON object per line
+        with open(_EVENT_LOG_FILE, 'a', encoding='utf-8') as f:
+            f.write(json.dumps(ev, ensure_ascii=False) + '\n')
+    except Exception:
+        pass
+
+
+def _publish_event(ev: dict) -> None:
+    # attach timestamp if missing
+    if 'ts' not in ev:
+        ev['ts'] = _now_ts()
+    try:
+        _recent_events.append(ev)
+    except Exception:
+        pass
+    _write_event_to_log(ev)
+
+
+def _reader(pty_id: str):
+    """
+    Generic reader that supports both Unix pty masters (master_fd) and
+    subprocess pipe-backed terminals (proc.stdout). The thread reads data
+    and appends to the in-memory buffer while publishing stdout events.
+    """
+    m = _local_ptys.get(pty_id)
+    if not m:
+        return
+    stop_event = m.get('stop')
+    lock = m.get('lock')
+    buffer = m.get('buffer')
+
+    # If this entry has a numeric master_fd we treat it as a pty master
+    if isinstance(m.get('master_fd'), int):
+        master_fd = m.get('master_fd')
+        try:
+            while not stop_event.is_set():
+                r, _, _ = select.select([master_fd], [], [], 0.1)
+                if master_fd in r:
                     try:
-                        total = sum(len(s) for s in buffer)
-                        if total > _MAX_BUFFER_CHARS:
-                            joined = ''.join(buffer)
-                            kept = joined[-_MAX_BUFFER_CHARS:]
-                            buffer.clear()
-                            buffer.append(kept)
+                        data = os.read(master_fd, 4096)
+                    except OSError:
+                        break
+                    if not data:
+                        break
+                    text = data.decode(errors='replace')
+                    try:
+                        _publish_event({'terminalId': pty_id, 'type': 'stdout', 'text': text, 'cwd': m.get('cwd')})
                     except Exception:
                         pass
+                    with lock:
+                        buffer.append(text)
+                        try:
+                            total = sum(len(s) for s in buffer)
+                            if total > _MAX_BUFFER_CHARS:
+                                joined = ''.join(buffer)
+                                kept = joined[-_MAX_BUFFER_CHARS:]
+                                buffer.clear()
+                                buffer.append(kept)
+                        except Exception:
+                            pass
+        except Exception:
+            pass
+        return
+
+    # Otherwise, if a subprocess is present, read from its stdout.
+    proc = m.get('proc')
+    if not proc:
+        return
+    # proc.stdout.read may block; it's fine because this runs in a daemon thread.
+    try:
+        while not stop_event.is_set():
+            try:
+                data = proc.stdout.read(4096)
+            except Exception:
+                # if the descriptor is closed or broken, stop
+                break
+            if not data:
+                # EOF
+                break
+            # proc.stdout.read returns bytes on Python when opened in binary,
+            # but the Popen created below uses binary mode. Handle both.
+            if isinstance(data, bytes):
+                text = data.decode(errors='replace')
+            else:
+                text = data
+            try:
+                _publish_event({'terminalId': pty_id, 'type': 'stdout', 'text': text, 'cwd': m.get('cwd')})
+            except Exception:
+                pass
+            with lock:
+                buffer.append(text)
+                try:
+                    total = sum(len(s) for s in buffer)
+                    if total > _MAX_BUFFER_CHARS:
+                        joined = ''.join(buffer)
+                        kept = joined[-_MAX_BUFFER_CHARS:]
+                        buffer.clear()
+                        buffer.append(kept)
+                except Exception:
+                    pass
     except Exception:
         pass
 
@@ -49,7 +179,8 @@ def register_tools(server):
         if payload and isinstance(payload, dict):
             name = payload.get('name', name)
             cwd = payload.get('cwd', cwd)
-        term_name = name or f"mcp-terminal-{int(__import__('time').time())}"
+        # generate a human-friendly deterministic name when not provided
+        term_name = name or _generate_name()
         # default to the user's home directory if cwd not provided
         if not cwd:
             try:
@@ -57,30 +188,55 @@ def register_tools(server):
             except Exception:
                 cwd = None
         try:
-            master_fd, slave_fd = os.openpty()
+            # Prefer a real pty on POSIX when available.
             shell = os.environ.get('SHELL', '/bin/sh') if os.name != 'nt' else (os.environ.get('ComSpec', 'cmd.exe'))
-            # Start the shell with the requested working directory when possible
             try:
-                proc = subprocess.Popen([shell], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd, close_fds=True, cwd=cwd)
-            except TypeError:
-                # some platforms or older Python versions may not accept cwd for Popen with file descriptors
-                proc = subprocess.Popen([shell], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd, close_fds=True)
-            os.close(slave_fd)
-            lid = term_name if term_name else f"local-pty-{uuid.uuid4().hex[:8]}"
-            buf = []
-            lock = threading.Lock()
-            stop_ev = threading.Event()
-            th = threading.Thread(target=_pty_reader, args=(lid, master_fd, stop_ev, buf, lock), daemon=True)
-            th.start()
-            _local_ptys[lid] = {
-                'master_fd': master_fd,
-                'proc': proc,
-                'buffer': buf,
-                'lock': lock,
-                'stop': stop_ev,
-                'thread': th,
-                'cwd': cwd
-            }
+                master_fd, slave_fd = os.openpty()
+                # Start the shell attached to the pty slave
+                try:
+                    proc = subprocess.Popen([shell], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd, close_fds=True, cwd=cwd)
+                except TypeError:
+                    proc = subprocess.Popen([shell], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd, close_fds=True)
+                os.close(slave_fd)
+                lid = term_name if term_name else f"local-pty-{uuid.uuid4().hex[:8]}"
+                buf = []
+                lock = threading.Lock()
+                stop_ev = threading.Event()
+                th = threading.Thread(target=_reader, args=(lid,), daemon=True)
+                th.start()
+                _local_ptys[lid] = {
+                    'master_fd': master_fd,
+                    'proc': proc,
+                    'buffer': buf,
+                    'lock': lock,
+                    'stop': stop_ev,
+                    'thread': th,
+                    'cwd': cwd
+                }
+            except Exception:
+                # Fall back to pipe-backed subprocess (Windows or when pty isn't available).
+                # Use binary mode for stdout/stderr so the reader can decode consistently.
+                proc = subprocess.Popen([shell], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=cwd)
+                lid = term_name if term_name else f"local-subproc-{uuid.uuid4().hex[:8]}"
+                buf = []
+                lock = threading.Lock()
+                stop_ev = threading.Event()
+                th = threading.Thread(target=_reader, args=(lid,), daemon=True)
+                th.start()
+                _local_ptys[lid] = {
+                    'master_fd': None,
+                    'proc': proc,
+                    'buffer': buf,
+                    'lock': lock,
+                    'stop': stop_ev,
+                    'thread': th,
+                    'cwd': cwd
+                }
+            # publish a lifecycle 'create' event for watchers (best-effort)
+            try:
+                _publish_event({'terminalId': lid, 'type': 'create', 'cwd': cwd, 'pid': getattr(proc, 'pid', None)})
+            except Exception:
+                pass
             # Always return a JSON object with terminalId and cwd
             return json.dumps({'terminalId': lid, 'cwd': cwd})
         except Exception:
@@ -114,7 +270,28 @@ def register_tools(server):
             try:
                 m = _local_ptys[terminalId]
                 to_write = text if text.endswith('\n') else text + '\n'
-                os.write(m['master_fd'], to_write.encode())
+                # publish cmd event for watchers
+                try:
+                    _publish_event({'terminalId': terminalId, 'type': 'cmd', 'text': text, 'cwd': m.get('cwd'), 'pid': getattr(m.get('proc', None), 'pid', None)})
+                except Exception:
+                    pass
+                # If a pty master_fd is present, write to it. Otherwise write to proc.stdin.
+                try:
+                    if isinstance(m.get('master_fd'), int) and m.get('master_fd') is not None:
+                        os.write(m['master_fd'], to_write.encode())
+                    else:
+                        proc = m.get('proc')
+                        if proc and proc.stdin:
+                            try:
+                                # write bytes to stdin
+                                proc.stdin.write(to_write.encode())
+                                proc.stdin.flush()
+                            except TypeError:
+                                # maybe stdin is text-mode
+                                proc.stdin.write(to_write)
+                                proc.stdin.flush()
+                except Exception as e:
+                    return str(e)
                 # If we created the terminal for this send, return the new id in JSON
                 if created_new:
                     try:
@@ -192,9 +369,30 @@ def register_tools(server):
         if terminalId in _local_ptys:
             try:
                 m = _local_ptys[terminalId]
+                # Try platform-appropriate interrupt: write Ctrl-C to master or stdin, or send SIGINT to the process.
                 try:
-                    os.write(m['master_fd'], b'\x03')
-                    return ''
+                    if isinstance(m.get('master_fd'), int) and m.get('master_fd') is not None:
+                        os.write(m['master_fd'], b'\x03')
+                        return ''
+                    proc = m.get('proc')
+                    if proc:
+                        # prefer sending a signal if available
+                        try:
+                            proc.send_signal(signal.SIGINT)
+                            return ''
+                        except Exception:
+                            # fall back to writing Ctrl-C to stdin
+                            try:
+                                if proc.stdin:
+                                    try:
+                                        proc.stdin.write(b'\x03')
+                                        proc.stdin.flush()
+                                    except TypeError:
+                                        proc.stdin.write('\x03')
+                                        proc.stdin.flush()
+                                    return ''
+                            except Exception:
+                                pass
                 except Exception as e:
                     return str(e)
             except Exception:
@@ -228,15 +426,32 @@ def register_tools(server):
                 m = _local_ptys[terminalId]
                 m['stop'].set()
                 try:
-                    os.close(m['master_fd'])
+                    if isinstance(m.get('master_fd'), int) and m.get('master_fd') is not None:
+                        os.close(m['master_fd'])
                 except Exception:
                     pass
                 try:
-                    m['proc'].terminate()
+                    proc = m.get('proc')
+                    if proc:
+                        try:
+                            # Close stdin if present to encourage graceful exit
+                            if proc.stdin:
+                                try:
+                                    proc.stdin.close()
+                                except Exception:
+                                    pass
+                            proc.terminate()
+                        except Exception:
+                            pass
                 except Exception:
                     pass
                 try:
                     m['thread'].join(timeout=1.0)
+                except Exception:
+                    pass
+                # publish a lifecycle 'dispose' event for watchers (best-effort)
+                try:
+                    _publish_event({'terminalId': terminalId, 'type': 'dispose', 'cwd': m.get('cwd')})
                 except Exception:
                     pass
                 del _local_ptys[terminalId]

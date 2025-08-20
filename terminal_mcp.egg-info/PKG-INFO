@@ -1,3 +1,11 @@
+Metadata-Version: 2.4
+Name: terminal-mcp
+Version: 0.0.1
+Summary: Terminal MCP events.log viewer (terminal-mcp)
+Author: JoshuaWink
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
 # terminal-mcp-server
 
 A small FastMCP server that exposes terminal (PTY) management APIs over MCP.
@@ -22,7 +30,6 @@ Available tools (summary)
 - `terminal_clear(terminalId)` -> clear buffer
 - `terminal_dispose(terminalId)` -> terminate and clean up
 - `terminal_list()` -> list known PTYs (includes `cwd` now)
-
 
 Quickstart
 1. Create a virtualenv and install dependencies:
