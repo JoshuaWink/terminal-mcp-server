@@ -1,0 +1,2 @@
+[console_scripts]
+terminal-mcp = terminal_mcp.terminal_feed:main
