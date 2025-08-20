@@ -834,3 +834,352 @@
 {"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Switched to a new branch 'feature/pty-crossplatform'\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.231033Z"}
 {"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "%                                                                              \r \r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.231657Z"}
 {"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\rjoshuawink@Joshuas-MacBook-Air terminal-mcp-server % \u001b[?2004hcd /Users/joshuawink/Docu\r-mcp-server % cd /Users/joshuawink/Docum                                      ents/github/terminal-mcp-server && git\r<ents/github/terminal-mcp-server && git                                       add .\u001b[?2004l\r\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.232120Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "%                                                                              \r \r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.261971Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\rjoshuawink@Joshuas-MacBook-Air terminal-mcp-server % \u001b[?2004hcd /Users/joshuawink/Docu\r-mcp-server % cd /Users/joshuawink/Docum                                      ents/git", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262146Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "hub/terminal-mcp-se", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262233Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "rver && if \r<ents/github/terminal-mcp-server && if g                                      ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262304Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "it diff --", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262367Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "cached --q", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262430Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "uiet; th", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262490Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "en echo ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262551Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\"N\r<it diff --cached --quiet; then echo \"No                                       sta", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262611Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ged cha", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262674Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "nges to", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262731Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " commi", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262792Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "t\"; el", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262846Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "se gi", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262899Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "t c\r< staged changes to commit\"; else git co                                      m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.262955Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "mit -", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263012Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "m \"too", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263070Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ls:", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263131Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " make ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263197Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "term", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263256Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "inal p", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263325Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ty r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263385Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ead\r<mmit -m \"tools: make terminal pty reade                                      r cr", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263532Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "o", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263591Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ss-", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263651Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "plat", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263708Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "form", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263764Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " (p", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263820Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ty +", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263877Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " pip", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263934Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "e fa", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.263992Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "llba", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264045Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ck)", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264101Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r<r cross-platform (pty + pipe fallback),                                       ha", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264154Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "nd", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264207Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "le ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264260Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "send", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264312Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "/in", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264364Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ter", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264417Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "rupt", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264477Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "/di", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264532Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "spos", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264587Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "e\";", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264642Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " fi", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264696Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\u001b[?2004l\r\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.264752Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "[feature/pty-crossplatform c163bb7] tools: make terminal pty reader cross-platform (pty + pipe fallback), handle send/interrupt/dispose\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.301939Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " 16 files changed, 1558 insertions(+), 47 deletions(-)\r\n create mode 100644 .terminal-mcp/events.log\r\n create mode 100644 scripts/__pycache__/terminal_feed.cpython-313.pyc\r\n create mode 100755 scripts/terminal_feed.py\r\n create mode 100644 terminal_mcp.egg-info/PKG-INFO\r\n create mode 100644 terminal_mcp.egg-info/SOURCES.txt\r\n create mode 100644 terminal_mcp.egg-info/dependency_links.txt\r\n create mode 100644 terminal_mcp.egg-info/entry_points.txt\r\n create mode 100644 terminal_mcp.egg-info/top_level.txt\r\n create mode 100644 terminal_mcp/__init__.py\r\n create mode 100644 terminal_mcp/__pycache__/__init__.cpython-313.pyc\r\n create mode 100644 terminal_mcp/__pycache__/terminal_feed.cpython-313.pyc\r\n create mode 100644 terminal_mcp/terminal_feed.py\r\n create mode 100644 test_smoke.py\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.303202Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "%                                                                              \r \r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.303434Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\rjoshuawink@Joshuas-MacBook-Air terminal-mcp-server % \u001b[?2004h", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.303505Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "cd /Users/joshuawink/", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.303567Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Docu\r-mcp-server % cd /Users/joshuawink/Docum                                      ents/githu", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.303625Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "b/terminal-mc", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.303683Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "p-server &", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.303740Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "& git\r<ents/github/terminal-mcp-server && git                                       push", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.303798Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " -u origi", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.303858Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "n $BRANCH", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.303917Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " || echo ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.303985Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\"git pu", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.304040Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r<push -u origin $BRANCH || echo \"git pus                                      h fai", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.304094Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "led\"\u001b[?2004l\r\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:56.304149Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Enumerating objects: 32, done.\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.168149Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Counting objects:   3% (1/32)\rCounting objects:   6% (2/32)\rCounting objects:   9% (3/32)\rCounting objects:  12% (4/32)\rCounting objects:  15% (5/32)\rCounting objects:  18% (6/32)\rCounting objects:  21% (7/32)\rCounting objects:  25% (8/32)\rCounting objects:  28% (9/32)\rCounting objects:  31% (10/32)\rCounting objects:  34% (11/32)\rCounting objects:  37% (12/32)\rCounting objects:  40% (13/32)\rCounting objects:  43% (14/32)\rCounting objects:  46% (15/32)\rCounting objects:  50% (16/32)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.168620Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Counting objects:  53% (17/32)\rCounting objects:  56% (18/32)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.168717Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Counting objects:  59% (19/32)\rCounting objects:  62% (20/32)\rCounting objects:  65% (21/32)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.168794Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Counting objects:  68% (22/32)\rCounting objects:  71% (23/32)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.168866Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Counting objects:  75% (24/32)\rCounting objects:  78% (25/32)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.168938Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Counting objects:  81% (26/32)\rCounting objects:  84% (27/32)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.169005Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Counting objects:  87% (28/32)\rCounting objects:  90% (29/32)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.169073Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Counting objects:  93% (30/32)\rCounting objects:  96% (31/32)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.169142Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Counting objects: 100% (32/32)\rCounting objects: 100% (32/32), done.\r\nDelta compression using up to 8 threads\r\nCompressing objects:   4% (1/23)\rCompressing objects:   8% (2/23)\rCompressing objects:  13% (3/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.169207Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  17% (4/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.169473Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  21% (5/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.169584Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  26% (6/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.169735Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  30% (7/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.169812Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  34% (8/23)\rCompressing objects:  39% (9/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.169883Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  43% (10/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.171050Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  47% (11/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.171635Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  52% (12/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.171783Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  56% (13/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.171851Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  60% (14/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.171920Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  65% (15/23)\rCompressing objects:  69% (16/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.171994Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  73% (17/23)\rCompressing objects:  78% (18/23)\rCompressing objects:  82% (19/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.172062Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  86% (20/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.172131Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects:  91% (21/23)\rCompressing objects:  95% (22/23)\rCompressing objects: 100% (23/23)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.172199Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Compressing objects: 100% (23/23), done.\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.172265Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:   3% (1/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.172399Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:   7% (2/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.172470Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  11% (3/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.172538Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  15% (4/26)\rWriting objects:  19% (5/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.173970Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  23% (6/26)\rWriting objects:  26% (7/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.174054Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  30% (8/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.174717Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  34% (9/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.175080Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  38% (10/26)\rWriting objects:  42% (11/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.175153Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  46% (12/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.175459Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  50% (13/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.175664Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  53% (14/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.175724Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  57% (15/26)\rWriting objects:  61% (16/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.175784Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  65% (17/26)\rWriting objects:  69% (18/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.175844Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  73% (19/26)\rWriting objects:  76% (20/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.175905Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  80% (21/26)\rWriting objects:  84% (22/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.175964Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  88% (23/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.176023Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  92% (24/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.176090Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects:  96% (25/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.176149Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects: 100% (26/26)\r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.176228Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Writing objects: 100% (26/26), 40.53 KiB | 10.13 MiB/s, done.\r\nTotal 26 (delta 4), reused 0 (delta 0), pack-reused 0\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.176285Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "remote: Resolving deltas:   0% (0/4)        \rremote: Resolving deltas:  25% (1/4)        \rremote: Resolving deltas:  50% (2/4)        \rremote: Resolving deltas:  75% (3/4)        \r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.525167Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "remote: Resolving deltas: 100% (4/4)        \r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.526791Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "remote: Resolving deltas: 100% (4/4), completed with 3 local objects.        \r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:57.527044Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "remote: \r\nremote: Create a pull request for 'feature/pty-crossplatform' on GitHub by visiting:        \r\nremote:      https://github.com/JoshuaWink/terminal-mcp-server/pull/new/feature/pty-crossplatform        \r\nremote: \r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.178096Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "To https://github.com/JoshuaWink/terminal-mcp-server.git\r\n * [new branch]      feature/pty-crossplatform -> feature/pty-crossplatform\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.180172Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "branch 'feature/pty-crossplatform' set up to track 'origin/feature/pty-crossplatform'.\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.183577Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "%                                                                              \r \r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.191174Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\rjoshuawink@Joshuas-MacBook-Air terminal-mcp-server % \u001b[?2004hcd /Users/joshuawink/Docu\r-mcp-server % cd /Users/joshuawink/Docum                                      ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.191558Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ents/github/terminal-mcp-server", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.191949Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " && if \r<ents/github/terminal-mcp-server && if c                                      ommand ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.192199Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "-v gh >/dev/nu", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.192474Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ll 2>&1; th", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.192701Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "en gh \r<ommand -v gh >/dev/null 2>&1; then gh p                                      r cr", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.192961Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "eate --fil", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.193182Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "l --titl", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.193358Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "e \"Make ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.193531Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "terminal", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.193714Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r<r create --fill --title \"Make terminal                                       tools ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.193896Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "cross-p", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.194081Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "latform", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.194256Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " (pty ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.194415Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "+ pip", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.194572Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "e fall", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.194749Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "b\r<tools cross-platform (pty + pipe fallba                                      ck)\"", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.194931Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " --bod", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.195125Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "y \"Add", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.195290Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "s PO", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.195438Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "SIX p", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.195583Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ty s", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.195748Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "uppo", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.195917Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "rt a", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.196099Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "n\r<ck)\" --body \"Adds POSIX pty support and                                       p", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.196261Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ipe-ba", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.196562Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "cked subp", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.196893Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "rocess", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.197134Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " fall", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.197328Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "back ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.197507Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "for ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.197688Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "W\r< pipe-backed subprocess fallback for Wi                                      ndo", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.197860Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ws; ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.198031Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "gene", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.198194Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ric ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.198366Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "read", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.198556Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "er a", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.198721Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "nd up", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.198911Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "date", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.199108Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "d se", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.199284Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "nd\r<ndows; generic reader and updated send/                                      ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.199437Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "inte", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.199613Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "rrup", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.199806Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "t/dis", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.200039Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "pose", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.200209Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " be", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.200382Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "havi", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.200537Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "or.", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.200690Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\" |", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.200862Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "| ec", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.201028Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ho ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.201210Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\"\r<interrupt/dispose behavior.\" || echo \"g                                      h", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.201380Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " pr c", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.201619Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "reat", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.201807Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "e f", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.202004Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "aile", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.202175Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "d\";", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.202345Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " el", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.202522Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "se ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.202689Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ech", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.202861Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "o \"g", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.203043Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "h C", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.203217Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "LI\r<h pr create failed\"; else echo \"gh CLI                                       ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.203380Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "not", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.203578Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " fou", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.203763Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "nd ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.203938Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "- c", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.204102Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "rea", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.204297Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "te ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.204466Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "a P", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.204625Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "R ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.204777Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "man", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.204920Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ual", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.205077Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ly ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.205214Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "fro", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.205379Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "m ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.205506Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r<not found - create a PR manually from b                                      ra", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.205627Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "nc", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.205752Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "h: ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.205895Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "$B", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.206041Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "RAN", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.206190Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "CH\"", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.206364Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "; f", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.206503Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "i\u001b[?2004l\r\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.206646Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Warning: 1 uncommitted change\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:58.809798Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\u001b[?25l", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:59.153138Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r\u001b[K\r\u001b[36m⣾\u001b[0m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:59.154903Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r\u001b[K\r\u001b[36m⣽\u001b[0m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:59.274341Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r\u001b[K\r\u001b[36m⣻\u001b[0m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:59.395677Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\u001b[?25h\r\u001b[K", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:59.458125Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r\nCreating pull request for \u001b[0;36mfeature/pty-crossplatform\u001b[0m into \u001b[0;36mmain\u001b[0m in JoshuaWink/terminal-mcp-server\r\n\r\n\u001b[?25l\r\u001b[K\r\u001b[36m⣾\u001b[0m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:59.458609Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r\u001b[K\r\u001b[36m⣽\u001b[0m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:59.579503Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r\u001b[K\r\u001b[36m⣻\u001b[0m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:59.700605Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r\u001b[K\r\u001b[36m⢿\u001b[0m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:59.821697Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r\u001b[K\r\u001b[36m⡿\u001b[0m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:16:59.942785Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r\u001b[K", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:17:00.063952Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r\u001b[36m⣟\u001b[0m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:17:00.065104Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r\u001b[K\r\u001b[36m⣯\u001b[0m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:17:00.184492Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r\u001b[K\r\u001b[36m⣷\u001b[0m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:17:00.312976Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r\u001b[K\r\u001b[36m⣾\u001b[0m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:17:00.433985Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\u001b[?25h\r\u001b[K", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:17:00.444817Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "https://github.com/JoshuaWink/terminal-mcp-server/pull/1\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:17:00.444975Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "%                                                                              \r \r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:17:00.446116Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\rjoshuawink@Joshuas-MacBook-Air terminal-mcp-server % \u001b[?2004h", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:17:00.446231Z"}
+{"terminalId": "[mcp] quick-lark", "type": "cmd", "text": "cd /Users/joshuawink/Documents/github/terminal-mcp-server && git checkout main && git pull origin main && git merge --no-ff feature/pty-crossplatform -m \"Merge feature/pty-crossplatform\" || echo \"merge failed\" && git push origin main && git branch -d feature/pty-crossplatform || true && git push origin --delete feature/pty-crossplatform || true", "cwd": "/Users/joshuawink", "pid": 86448, "ts": "2025-08-20T15:18:23.339714Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "cd /Users/joshuawink/Docu\r-mcp-server % cd /Users/joshuawink/Docum                                      ents/github/terminal-mcp-server && git\r<ents/github/terminal-mcp-server && git                                       checkout main && git pull ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.341595Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "origin main \r<checkout main && git pull origin main &                                      & git merge --no-ff featu", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.342227Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "re/pty-cross", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.342502Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "p\r<& git merge --no-ff feature/pty-crosspl                                      atform -m \"Merge f", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.343134Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "eature/pty-c", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.343427Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "rossplat", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.343612Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r<atform -m \"Merge feature/pty-crossplatf                                      orm\" ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.343763Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "|| ec", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.343906Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ho \"m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.344046Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "erge ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.344180Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "faile", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.344313Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "d\" &&", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.344444Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " git", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.344575Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " pus", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.344706Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r<orm\" || echo \"merge failed\" && git push                                       ori", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.344835Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "gin ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.344963Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "main", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.345091Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " && ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.345217Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "git ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.345344Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "bran", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.345471Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ch -", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.345599Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "d fe", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.345725Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "atu", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.345851Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "re/\r< origin main && git branch -d feature/p                                      ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.345979Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ty-c", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.346105Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ros", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.346232Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "spla", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.346358Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "tfo", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.346484Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "rm ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.346655Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "|| ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.346835Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "true", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.346987Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " && ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.347129Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "git ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.347266Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "pus", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.347401Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "h o\r<ty-crossplatform || true && git push or                                      ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.347535Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "igi", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.347669Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "n -", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.347801Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "-del", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.347933Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ete", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.348062Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " fe", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.348191Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "atu", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.348320Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "re/", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.348448Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "pty-", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.348575Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "cro", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.348703Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ssp", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.348831Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "lat", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.348960Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "for", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.349087Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r<igin --delete feature/pty-crossplatform                                       ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.349215Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "|| ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.349344Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "tru", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.349468Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "e\u001b[?2004l\r\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.349579Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "error: Your local changes to the following files would be overwritten by checkout:\r\n\t.terminal-mcp/events.log\r\nPlease commit your changes or stash them before you switch branches.\r\nAborting\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.378545Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "merge failed\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:23.379385Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "Everything up-to-date\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:24.341229Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "error: Cannot delete branch 'feature/pty-crossplatform' checked out at '/Users/joshuawink/Documents/github/terminal-mcp-server'\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:24.357251Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "To https://github.com/JoshuaWink/terminal-mcp-server.git\r\n - [deleted]         feature/pty-crossplatform\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:25.241109Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "%                                                                              \r \r", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:25.249298Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\rjoshuawink@Joshuas-MacBook-Air terminal-mcp-server % \u001b[?2004h", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:25.249860Z"}
+{"terminalId": "[mcp] quick-lark", "type": "cmd", "text": "cd /Users/joshuawink/Documents/github/terminal-mcp-server && git status --porcelain && git add .terminal-mcp/events.log || true && git commit -m \"chore: add events log generated during tests\" || true && git checkout main && git pull origin main && git merge --no-ff feature/pty-crossplatform -m \"Merge feature/pty-crossplatform\" && git push origin main && git branch -d feature/pty-crossplatform || true", "cwd": "/Users/joshuawink", "pid": 86448, "ts": "2025-08-20T15:18:43.632827Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "cd /Users/joshuawink/Docu\r-mcp-server % cd /Users/joshuawink/Docum                                      ents/github/terminal-mcp-server && git\r<ents/github/terminal-mcp-server && git                                       status --porcelain && git add .termina\r<status --porcelain && git add .terminal                                      -mcp/e", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.635298Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "vents.log || true && git commit ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.635893Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r<-mcp/events.log || true && git commit -                                      m \"chore: add events", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.636375Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " log gener", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.636611Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ated du", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.636792Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "r\r<m \"chore: add events log generated duri                                      ng t", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.636956Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ests\" ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.637114Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "|| tru", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.637335Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "e && ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.637497Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "git ch", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.637649Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "eckou", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.637799Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "t mai", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.637947Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "n\r<ng tests\" || true && git checkout main                                       && ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.638095Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "git p", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.638244Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ull o", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.638391Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "rigi", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.638536Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "n mai", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.638680Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "n && gi", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.638917Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "t me", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.639042Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "rge", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.639165Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " -\r<&& git pull origin main && git merge --                                      n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.639274Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "o-f", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.639380Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "f fe", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.639486Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "atu", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.639590Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "re/p", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.639696Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ty-", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.639801Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "cros", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.639907Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "spl", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.640012Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "atf", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.640117Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "orm", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.640221Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " -m", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.640326Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " \"Me", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.640430Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r<no-ff feature/pty-crossplatform -m \"Mer                                      ge", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.640535Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " fe", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.640640Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "atu", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.640746Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "re/", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.640850Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "pty", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.640955Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "-cr", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.641060Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "oss", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.641164Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "pla", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.641268Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "tfo", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.641372Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "rm", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.641477Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\" &", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.641581Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "& g", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.641686Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "it ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.641791Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "p\r<ge feature/pty-crossplatform\" && git pu                                      ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.641896Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "sh ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.642002Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ori", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.642107Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "gin", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.642213Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " ma", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.642319Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "in", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.642424Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " &&", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.642529Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " gi", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.642634Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "t ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.642739Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "bra", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.642844Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "nch", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.642950Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " -", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.643054Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "d f", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.643160Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "eat", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.643285Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ur", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.643390Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\r<sh origin main && git branch -d feature                                      /p", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.643494Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ty", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.643604Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "-cr", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.643709Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "os", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.643814Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "spl", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.643920Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "at", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.644025Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "for", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.644132Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "m ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.644238Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "|| ", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.644344Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "tr", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.644450Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "ue", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.644555Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": "\u001b[?2004l\r\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.644660Z"}
+{"terminalId": "[mcp] quick-lark", "type": "stdout", "text": " M .terminal-mcp/events.log\r\n", "cwd": "/Users/joshuawink", "ts": "2025-08-20T15:18:43.668029Z"}
