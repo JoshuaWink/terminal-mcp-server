@@ -1,0 +1,10 @@
+{
+  "servers": {
+    "terminal-mcp": {
+      "url": "http://localhost:8909",
+      "type": "http",
+      "description": "Terminal MCP server (Docker) at http://localhost:8909"
+    }
+  },
+  "inputs": []
+}

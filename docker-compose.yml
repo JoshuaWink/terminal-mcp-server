@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  terminal-mcp:
+    build:
+      context: .
+      args:
+        UID: 1000
+    image: terminal-mcp-server:latest
+    container_name: terminal-mcp-server
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    volumes:
+      - terminal-mcp-events:/app/.terminal-mcp
+    environment:
+      - TERMINAL_MCP_EVENT_LOG_ENABLED=1
+    ports:
+      - "8909:8909"
+
+volumes:
+  terminal-mcp-events:

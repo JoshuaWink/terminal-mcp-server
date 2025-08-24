@@ -202,17 +202,19 @@ def register_tools(server):
                 buf = []
                 lock = threading.Lock()
                 stop_ev = threading.Event()
-                th = threading.Thread(target=_reader, args=(lid,), daemon=True)
-                th.start()
+                # register terminal entry before starting reader to avoid race
                 _local_ptys[lid] = {
                     'master_fd': master_fd,
                     'proc': proc,
                     'buffer': buf,
                     'lock': lock,
                     'stop': stop_ev,
-                    'thread': th,
+                    'thread': None,
                     'cwd': cwd
                 }
+                th = threading.Thread(target=_reader, args=(lid,), daemon=True)
+                _local_ptys[lid]['thread'] = th
+                th.start()
             except Exception:
                 # Fall back to pipe-backed subprocess (Windows or when pty isn't available).
                 # Use binary mode for stdout/stderr so the reader can decode consistently.
@@ -221,17 +223,19 @@ def register_tools(server):
                 buf = []
                 lock = threading.Lock()
                 stop_ev = threading.Event()
-                th = threading.Thread(target=_reader, args=(lid,), daemon=True)
-                th.start()
+                # register terminal entry before starting reader to avoid race
                 _local_ptys[lid] = {
                     'master_fd': None,
                     'proc': proc,
                     'buffer': buf,
                     'lock': lock,
                     'stop': stop_ev,
-                    'thread': th,
+                    'thread': None,
                     'cwd': cwd
                 }
+                th = threading.Thread(target=_reader, args=(lid,), daemon=True)
+                _local_ptys[lid]['thread'] = th
+                th.start()
             # publish a lifecycle 'create' event for watchers (best-effort)
             try:
                 _publish_event({'terminalId': lid, 'type': 'create', 'cwd': cwd, 'pid': getattr(proc, 'pid', None)})
@@ -292,22 +296,21 @@ def register_tools(server):
                                 proc.stdin.flush()
                 except Exception as e:
                     return str(e)
-                # If we created the terminal for this send, return the new id in JSON
+                # Return a helpful non-blocking success message. If we created the
+                # terminal for this send include the terminalId in the response so
+                # callers can immediately read from it.
+                success_msg = f"Non-blocking command executed; use tool terminal_read with terminalId='{terminalId}' to read the result."
                 if created_new:
                     try:
-                        return json.dumps({'terminalId': terminalId, 'status': 'created', 'cwd': m.get('cwd')})
+                        return json.dumps({'terminalId': terminalId, 'status': 'created', 'cwd': m.get('cwd'), 'message': success_msg})
                     except Exception:
-                        return terminalId
-                return ''
+                        return success_msg
+                return success_msg
             except Exception as e:
                 return str(e)
         # If terminal not found, return an error
         return 'Error: terminal not found'
     
-    @server.tool(name="runCommand", description="Send text to a terminal (pty). Non-blocking.")
-    def runCommand(terminalId: str = None, text: str = None, payload: dict = None) -> str:
-        return terminal_send(terminalId, text, payload)
-
     @server.tool(name="terminal_read", description="Read buffered output from a pseudoterminal created by terminal_create.")
     def terminal_read(terminalId: str = None, payload: dict = None) -> str:
         if payload and isinstance(payload, dict):
