@@ -13,8 +13,10 @@ import uuid
 import subprocess
 import json
 import re
+import fcntl
+import sys
 from collections import deque
-from datetime import datetime
+from datetime import datetime, timezone
 import hashlib
 
 _local_ptys = {}
@@ -31,6 +33,8 @@ _EVENT_LOG_ENABLED = os.environ.get('TERMINAL_MCP_EVENT_LOG_ENABLED', '1') == '1
 
 # in-memory recent events for poll-style queries
 _recent_events = deque(maxlen=_EVENT_DEQUE_MAX)
+_event_seq_lock = threading.Lock()
+_event_seq = 0  # monotonically increasing sequence id for events
 
 # lightweight word lists used to create deterministic human-friendly ids
 # picked by indices derived from the current timestamp (time_ns) so rapid
@@ -61,7 +65,19 @@ def _generate_name(seed: int = None) -> str:
 
 
 def _now_ts():
-    return datetime.utcnow().isoformat() + 'Z'
+    """Return RFC3339/ISO-8601 UTC timestamp with trailing Z (timezone-aware).
+
+    Uses datetime.now(timezone.utc) instead of deprecated utcnow(). If anything
+    goes wrong, falls back to a basic time.time() derived string.
+    """
+    try:
+        # timespec='milliseconds' keeps log lines compact while preserving ordering fidelity
+        return datetime.now(timezone.utc).isoformat(timespec='milliseconds').replace('+00:00','Z')
+    except Exception:
+        try:
+            return datetime.fromtimestamp(time.time(), timezone.utc).isoformat().replace('+00:00','Z')
+        except Exception:
+            return '1970-01-01T00:00:00Z'
 
 
 def _write_event_to_log(ev: dict) -> None:
@@ -80,6 +96,15 @@ def _publish_event(ev: dict) -> None:
     # attach timestamp if missing
     if 'ts' not in ev:
         ev['ts'] = _now_ts()
+    # assign monotonically increasing sequence number
+    global _event_seq
+    try:
+        with _event_seq_lock:
+            _event_seq += 1
+            ev['seq'] = _event_seq
+    except Exception:
+        # best-effort; if it fails we still continue without seq
+        pass
     try:
         _recent_events.append(ev)
     except Exception:
@@ -103,32 +128,40 @@ def _reader(pty_id: str):
     # If this entry has a numeric master_fd we treat it as a pty master
     if isinstance(m.get('master_fd'), int):
         master_fd = m.get('master_fd')
+        # Make the fd non-blocking
+        try:
+            flags = fcntl.fcntl(master_fd, fcntl.F_GETFL)
+            fcntl.fcntl(master_fd, fcntl.F_SETFL, flags | os.O_NONBLOCK)
+        except Exception:
+            pass
         try:
             while not stop_event.is_set():
-                r, _, _ = select.select([master_fd], [], [], 0.1)
-                if master_fd in r:
-                    try:
-                        data = os.read(master_fd, 4096)
-                    except OSError:
+                try:
+                    data = os.read(master_fd, 4096)
+                except OSError as e:
+                    if e.errno == 11:  # EAGAIN, no data available
+                        time.sleep(0.1)
+                        continue
+                    else:
                         break
-                    if not data:
-                        break
-                    text = data.decode(errors='replace')
+                if not data:
+                    break
+                text = data.decode(errors='replace')
+                try:
+                    _publish_event({'terminalId': pty_id, 'type': 'stdout', 'text': text, 'cwd': m.get('cwd')})
+                except Exception:
+                    pass
+                with lock:
+                    buffer.append(text)
                     try:
-                        _publish_event({'terminalId': pty_id, 'type': 'stdout', 'text': text, 'cwd': m.get('cwd')})
+                        total = sum(len(s) for s in buffer)
+                        if total > _MAX_BUFFER_CHARS:
+                            joined = ''.join(buffer)
+                            kept = joined[-_MAX_BUFFER_CHARS:]
+                            buffer.clear()
+                            buffer.append(kept)
                     except Exception:
                         pass
-                    with lock:
-                        buffer.append(text)
-                        try:
-                            total = sum(len(s) for s in buffer)
-                            if total > _MAX_BUFFER_CHARS:
-                                joined = ''.join(buffer)
-                                kept = joined[-_MAX_BUFFER_CHARS:]
-                                buffer.clear()
-                                buffer.append(kept)
-                        except Exception:
-                            pass
         except Exception:
             pass
         return
@@ -137,17 +170,36 @@ def _reader(pty_id: str):
     proc = m.get('proc')
     if not proc:
         return
+
+    # For pipe-based terminals, make stdout non-blocking
+    if sys.platform == 'darwin' and not isinstance(m.get('master_fd'), int):
+        try:
+            flags = fcntl.fcntl(proc.stdout.fileno(), fcntl.F_GETFL)
+            fcntl.fcntl(proc.stdout.fileno(), fcntl.F_SETFL, flags | os.O_NONBLOCK)
+        except Exception:
+            pass
+
     # proc.stdout.read may block; it's fine because this runs in a daemon thread.
     try:
         while not stop_event.is_set():
             try:
                 data = proc.stdout.read(4096)
+            except (IOError, OSError) as e:
+                # On non-blocking read, we might get an error indicating no data
+                if e.errno == 11: # EAGAIN
+                    time.sleep(0.1)
+                    continue
+                else:
+                    break
             except Exception:
                 # if the descriptor is closed or broken, stop
                 break
             if not data:
-                # EOF
-                break
+                # EOF or no data on non-blocking read
+                if proc.poll() is not None:
+                    break # Process finished
+                time.sleep(0.1) # Avoid busy-waiting
+                continue
             # proc.stdout.read returns bytes on Python when opened in binary,
             # but the Popen created below uses binary mode. Handle both.
             if isinstance(data, bytes):
@@ -174,11 +226,25 @@ def _reader(pty_id: str):
 
 
 def register_tools(server):
-    @server.tool(name="terminal_create", description="Create a terminal (pty-backed). Returns terminal id and cwd.")
+    @server.tool(
+        name="terminal_create",
+        description=(
+            "Create a managed shell session (pty or pipe). Use first when you need a stable, reusable, non-blocking "
+            "terminal to run multiple commands, long-lived servers, watchers or background processes. Returns JSON {terminalId,cwd}."
+        ),
+    )
     def terminal_create(name: str = None, cwd: str = None, payload: dict = None) -> str:
+        """Create a terminal.
+
+        QoL additions (opt-in): set any of payload.verbose | payload.meta | payload.return_meta to
+        receive richer JSON with guidance and follow-up hints. Default remains minimal JSON
+        for backward compatibility.
+        """
+        verbose = False
         if payload and isinstance(payload, dict):
             name = payload.get('name', name)
             cwd = payload.get('cwd', cwd)
+            verbose = any(payload.get(k) for k in ('verbose','meta','return_meta'))
         # generate a human-friendly deterministic name when not provided
         term_name = name or _generate_name()
         # default to the user's home directory if cwd not provided
@@ -188,67 +254,113 @@ def register_tools(server):
             except Exception:
                 cwd = None
         try:
-            # Prefer a real pty on POSIX when available.
+            # Prefer a real pty on POSIX when available, but use pipe on macOS for compatibility
             shell = os.environ.get('SHELL', '/bin/sh') if os.name != 'nt' else (os.environ.get('ComSpec', 'cmd.exe'))
-            try:
-                master_fd, slave_fd = os.openpty()
-                # Start the shell attached to the pty slave
-                try:
-                    proc = subprocess.Popen([shell], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd, close_fds=True, cwd=cwd)
-                except TypeError:
-                    proc = subprocess.Popen([shell], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd, close_fds=True)
-                os.close(slave_fd)
-                lid = term_name if term_name else f"local-pty-{uuid.uuid4().hex[:8]}"
-                buf = []
-                lock = threading.Lock()
-                stop_ev = threading.Event()
-                th = threading.Thread(target=_reader, args=(lid,), daemon=True)
-                th.start()
-                _local_ptys[lid] = {
-                    'master_fd': master_fd,
-                    'proc': proc,
-                    'buffer': buf,
-                    'lock': lock,
-                    'stop': stop_ev,
-                    'thread': th,
-                    'cwd': cwd
-                }
-            except Exception:
-                # Fall back to pipe-backed subprocess (Windows or when pty isn't available).
-                # Use binary mode for stdout/stderr so the reader can decode consistently.
+            if sys.platform == 'darwin':
+                # Use pipe-backed for macOS compatibility
+                shell = '/bin/sh'  # Use sh for better compatibility
                 proc = subprocess.Popen([shell], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=cwd)
                 lid = term_name if term_name else f"local-subproc-{uuid.uuid4().hex[:8]}"
                 buf = []
                 lock = threading.Lock()
                 stop_ev = threading.Event()
-                th = threading.Thread(target=_reader, args=(lid,), daemon=True)
-                th.start()
                 _local_ptys[lid] = {
                     'master_fd': None,
                     'proc': proc,
                     'buffer': buf,
                     'lock': lock,
                     'stop': stop_ev,
-                    'thread': th,
+                    'thread': None,  # will set after thread creation
                     'cwd': cwd
                 }
+                th = threading.Thread(target=_reader, args=(lid,), daemon=True)
+                th.start()
+                _local_ptys[lid]['thread'] = th
+            else:
+                try:
+                    master_fd, slave_fd = os.openpty()
+                    # Start the shell attached to the pty slave
+                    try:
+                        proc = subprocess.Popen([shell], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd, close_fds=True, cwd=cwd)
+                    except TypeError:
+                        proc = subprocess.Popen([shell], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd, close_fds=True)
+                    os.close(slave_fd)
+                    lid = term_name if term_name else f"local-pty-{uuid.uuid4().hex[:8]}"
+                    buf = []
+                    lock = threading.Lock()
+                    stop_ev = threading.Event()
+                    _local_ptys[lid] = {
+                        'master_fd': master_fd,
+                        'proc': proc,
+                        'buffer': buf,
+                        'lock': lock,
+                        'stop': stop_ev,
+                        'thread': None,  # will set after thread creation
+                        'cwd': cwd
+                    }
+                    th = threading.Thread(target=_reader, args=(lid,), daemon=True)
+                    th.start()
+                    _local_ptys[lid]['thread'] = th
+                except Exception:
+                    # Fall back to pipe-backed subprocess (Windows or when pty isn't available).
+                    # Use binary mode for stdout/stderr so the reader can decode consistently.
+                    proc = subprocess.Popen([shell], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=cwd)
+                    lid = term_name if term_name else f"local-subproc-{uuid.uuid4().hex[:8]}"
+                    buf = []
+                    lock = threading.Lock()
+                    stop_ev = threading.Event()
+                    _local_ptys[lid] = {
+                        'master_fd': None,
+                        'proc': proc,
+                        'buffer': buf,
+                        'lock': lock,
+                        'stop': stop_ev,
+                        'thread': None,  # will set after thread creation
+                        'cwd': cwd
+                    }
+                    th = threading.Thread(target=_reader, args=(lid,), daemon=True)
+                    th.start()
+                    _local_ptys[lid]['thread'] = th
             # publish a lifecycle 'create' event for watchers (best-effort)
             try:
                 _publish_event({'terminalId': lid, 'type': 'create', 'cwd': cwd, 'pid': getattr(proc, 'pid', None)})
             except Exception:
                 pass
-            # Always return a JSON object with terminalId and cwd
-            return json.dumps({'terminalId': lid, 'cwd': cwd})
+            base = {'terminalId': lid, 'cwd': cwd}
+            if verbose:
+                base.update({
+                    'created': True,
+                    'hint': 'Use terminal_send to run commands, then terminal_read to fetch output.',
+                    'next': ['terminal_send', 'terminal_read', 'terminal_list']
+                })
+            return json.dumps(base)
         except Exception:
             return term_name
 
-    @server.tool(name="terminal_send", description="Send text to a terminal (shell or pty). Non-blocking.")
+    @server.tool(
+        name="terminal_send",
+        description=(
+            "Write a command or input line to an existing terminal. Non-blocking; output is captured asynchronously. "
+            "If no terminalId supplied a new terminal is auto-created (for quick one-offs). Pair with terminal_read to fetch output."
+        ),
+    )
     def terminal_send(terminalId: str = None, text: str = None, payload: dict = None) -> str:
+        """Send text to a terminal.
+
+        QoL additions (opt-in via verbose/meta/return_meta flags in payload):
+        - Returns structured JSON with status, size, and hints instead of empty string.
+        - Auto-created terminal responses always JSON and include hint.
+        - Errors returned as JSON when verbose.
+        """
+        verbose = False
         if payload and isinstance(payload, dict):
             terminalId = payload.get('terminalId', terminalId)
             text = payload.get('text', text)
+            verbose = any(payload.get(k) for k in ('verbose','meta','return_meta'))
         # Require text for all sends
         if text is None:
+            if verbose:
+                return json.dumps({'error':'text required','hint':'Provide shell input in the "text" parameter.'})
             return 'Error: text required'
 
         created_new = False
@@ -264,6 +376,8 @@ def register_tools(server):
                 except Exception:
                     terminalId = created
             except Exception:
+                if verbose:
+                    return json.dumps({'error':'failed to create terminal'})
                 return 'Error: failed to create terminal'
 
         if terminalId in _local_ptys:
@@ -294,25 +408,53 @@ def register_tools(server):
                     return str(e)
                 # If we created the terminal for this send, return the new id in JSON
                 if created_new:
-                    try:
-                        return json.dumps({'terminalId': terminalId, 'status': 'created', 'cwd': m.get('cwd')})
-                    except Exception:
-                        return terminalId
+                    resp = {'terminalId': terminalId, 'status': 'created', 'cwd': m.get('cwd'), 'hint':'Use terminal_read to fetch output.'}
+                    if verbose:
+                        resp['next'] = ['terminal_read','terminal_clear','terminal_interrupt']
+                    return json.dumps(resp)
+                if verbose:
+                    return json.dumps({'terminalId': terminalId, 'status': 'sent', 'bytes': len(to_write), 'hint':'Call terminal_read to view buffered output.'})
                 return ''
             except Exception as e:
+                if verbose:
+                    return json.dumps({'error': str(e)})
                 return str(e)
         # If terminal not found, return an error
+        if verbose:
+            return json.dumps({'error':'terminal not found'})
         return 'Error: terminal not found'
     
-    @server.tool(name="runCommand", description="Send text to a terminal (pty). Non-blocking.")
+    @server.tool(
+        name="runCommand",
+        description=(
+            "Alias of terminal_send for compatibility with generic agent tooling expecting a 'runCommand' verb."
+        ),
+    )
     def runCommand(terminalId: str = None, text: str = None, payload: dict = None) -> str:
         return terminal_send(terminalId, text, payload)
 
-    @server.tool(name="terminal_read", description="Read buffered output from a pseudoterminal created by terminal_create.")
+    @server.tool(
+        name="terminal_read",
+        description=(
+            "Retrieve accumulated stdout for a terminal without consuming it (idempotent). Use after terminal_send. "
+            "Supports tailing via lines, ANSI stripping, and verbose metadata for agents."
+        ),
+    )
     def terminal_read(terminalId: str = None, payload: dict = None) -> str:
+        """Read buffered output.
+
+        QoL additions (opt-in via verbose/meta/return_meta):
+        - Returns JSON with output, line counts, empty flag, and hints.
+        - When lines parameter used, includes requested vs returned lines.
+        - Legacy behavior (plain text) preserved when not verbose.
+        """
+        verbose = False
         if payload and isinstance(payload, dict):
             terminalId = payload.get('terminalId', terminalId)
+            verbose = any(payload.get(k) for k in ('verbose','meta','return_meta'))
         if not terminalId:
+            if verbose:
+                return json.dumps({'error':'terminalId required'})
             return 'Error: terminalId required'
         if terminalId in _local_ptys:
             try:
@@ -353,14 +495,40 @@ def register_tools(server):
                 if lines is not None:
                     split_lines = out.splitlines(True)
                     if lines <= 0:
-                        return ''
-                    return ''.join(split_lines[-lines:])
+                        return json.dumps({'output':'','lines':0,'hint':'No lines requested.'}) if verbose else ''
+                    trimmed = ''.join(split_lines[-lines:])
+                    if verbose:
+                        return json.dumps({
+                            'output': trimmed,
+                            'lines': len(trimmed.splitlines()),
+                            'requested': lines,
+                            'terminalId': terminalId,
+                            'hint': 'Send more commands with terminal_send or clear buffer with terminal_clear.' if not trimmed else 'Append more output by sending commands.'
+                        })
+                    return trimmed
+                if verbose:
+                    return json.dumps({
+                        'output': out,
+                        'lines': len(out.splitlines()) if out else 0,
+                        'terminalId': terminalId,
+                        'empty': not bool(out),
+                        'hint': 'Buffer empty. Use terminal_send to execute a command.' if not out else 'Use lines parameter to tail recent output.'
+                    })
                 return out
             except Exception:
+                if verbose:
+                    return json.dumps({'error':'read failure'})
                 return ''
+        if verbose:
+            return json.dumps({'error':'terminal not found'})
         return 'Error: terminal not found'
 
-    @server.tool(name="terminal_interrupt", description="Send an interrupt (Ctrl-C) to a terminal created by these tools.")
+    @server.tool(
+        name="terminal_interrupt",
+        description=(
+            "Send Ctrl-C (SIGINT) to an active terminal process. Use to abort a long-running command or gracefully stop a foreground server."
+        ),
+    )
     def terminal_interrupt(terminalId: str = None, payload: dict = None) -> str:
         if payload and isinstance(payload, dict):
             terminalId = payload.get('terminalId', terminalId)
@@ -373,12 +541,20 @@ def register_tools(server):
                 try:
                     if isinstance(m.get('master_fd'), int) and m.get('master_fd') is not None:
                         os.write(m['master_fd'], b'\x03')
+                        try:
+                            _publish_event({'terminalId': terminalId, 'type': 'interrupt', 'cwd': m.get('cwd')})
+                        except Exception:
+                            pass
                         return ''
                     proc = m.get('proc')
                     if proc:
                         # prefer sending a signal if available
                         try:
                             proc.send_signal(signal.SIGINT)
+                            try:
+                                _publish_event({'terminalId': terminalId, 'type': 'interrupt', 'cwd': m.get('cwd')})
+                            except Exception:
+                                pass
                             return ''
                         except Exception:
                             # fall back to writing Ctrl-C to stdin
@@ -390,6 +566,10 @@ def register_tools(server):
                                     except TypeError:
                                         proc.stdin.write('\x03')
                                         proc.stdin.flush()
+                                    try:
+                                        _publish_event({'terminalId': terminalId, 'type': 'interrupt', 'cwd': m.get('cwd')})
+                                    except Exception:
+                                        pass
                                     return ''
                             except Exception:
                                 pass
@@ -399,7 +579,12 @@ def register_tools(server):
                 return ''
         return 'Error: terminal not found'
 
-    @server.tool(name="terminal_clear", description="Clear the buffered output for a terminal created by terminal_create.")
+    @server.tool(
+        name="terminal_clear",
+        description=(
+            "Clear the in-memory output buffer for a terminal (does not affect the underlying process). Use before benchmarks, or to reduce payload size."
+        ),
+    )
     def terminal_clear(terminalId: str = None, payload: dict = None) -> str:
         if payload and isinstance(payload, dict):
             terminalId = payload.get('terminalId', terminalId)
@@ -410,12 +595,21 @@ def register_tools(server):
                 m = _local_ptys[terminalId]
                 with m['lock']:
                     m['buffer'].clear()
+                try:
+                    _publish_event({'terminalId': terminalId, 'type': 'clear', 'cwd': m.get('cwd')})
+                except Exception:
+                    pass
                 return ''
             except Exception:
                 return ''
         return 'Error: terminal not found'
 
-    @server.tool(name="terminal_dispose", description="Dispose a terminal created by these tools.")
+    @server.tool(
+        name="terminal_dispose",
+        description=(
+            "Terminate and remove a managed terminal. Sends terminate+cleanup, joins reader, and emits a dispose event with exitCode. Always call when done to free resources."
+        ),
+    )
     def terminal_dispose(terminalId: str = None, payload: dict = None) -> str:
         if payload and isinstance(payload, dict):
             terminalId = payload.get('terminalId', terminalId)
@@ -424,7 +618,11 @@ def register_tools(server):
         if terminalId in _local_ptys:
             try:
                 m = _local_ptys[terminalId]
+                verbose = False
+                if payload and isinstance(payload, dict):
+                    verbose = any(payload.get(k) for k in ('verbose','meta','return_meta'))
                 m['stop'].set()
+                exit_code = None
                 try:
                     if isinstance(m.get('master_fd'), int) and m.get('master_fd') is not None:
                         os.close(m['master_fd'])
@@ -441,6 +639,15 @@ def register_tools(server):
                                 except Exception:
                                     pass
                             proc.terminate()
+                            try:
+                                # give process brief time to exit
+                                proc.wait(timeout=1.0)
+                            except Exception:
+                                pass
+                            try:
+                                exit_code = proc.poll()
+                            except Exception:
+                                exit_code = None
                         except Exception:
                             pass
                 except Exception:
@@ -451,24 +658,28 @@ def register_tools(server):
                     pass
                 # publish a lifecycle 'dispose' event for watchers (best-effort)
                 try:
-                    _publish_event({'terminalId': terminalId, 'type': 'dispose', 'cwd': m.get('cwd')})
+                    ev = {'terminalId': terminalId, 'type': 'dispose', 'cwd': m.get('cwd')}
+                    if exit_code is not None:
+                        ev['exitCode'] = exit_code
+                    _publish_event(ev)
                 except Exception:
                     pass
                 del _local_ptys[terminalId]
+                if verbose:
+                    return json.dumps({'terminalId': terminalId, 'disposed': True, 'exitCode': exit_code})
                 return ''
             except Exception:
                 return ''
         return 'Error: terminal not found'
 
-    @server.tool(name="terminal_list", description="List terminals created or registered (returns JSON array).")
+    @server.tool(
+        name="terminal_list",
+        description=(
+            "List currently active managed terminals with basic stats (pid, buffer size, cwd). Use to discover or monitor existing sessions."
+        ),
+    )
     def terminal_list(payload: dict = None) -> str:
-        include_remote = False
-        if payload and isinstance(payload, dict):
-            if 'include_remote' in payload:
-                try:
-                    include_remote = bool(payload.get('include_remote'))
-                except Exception:
-                    include_remote = False
+        # payload currently unused; reserved for future filters
         results = []
         try:
             for tid, m in _local_ptys.items():
@@ -486,3 +697,113 @@ def register_tools(server):
             return json.dumps(results)
         except Exception:
             return '[]'
+
+    @server.tool(
+        name="terminal_events",
+        description=(
+            "Query recent terminal lifecycle & activity events (create, cmd, stdout, clear, interrupt, dispose). Supports pagination (after), tailing (since_ts), and search (contains/regex)."
+        ),
+    )
+    def terminal_events(payload: dict = None) -> str:
+        terminal_id = None
+        since_ts = None
+        limit = 100
+        types = None
+        after_seq = None  # pagination cursor
+        contains = None
+        regex_pat = None
+        truncated = False
+        if payload and isinstance(payload, dict):
+            terminal_id = payload.get('terminalId') or payload.get('terminal_id')
+            since_ts = payload.get('since_ts') or payload.get('since')
+            try:
+                if 'limit' in payload:
+                    limit = int(payload.get('limit'))
+            except Exception:
+                limit = 100
+            maybe_types = payload.get('types')
+            if isinstance(maybe_types, (list, tuple)):
+                types = set(str(t) for t in maybe_types if t)
+            if 'after' in payload:
+                try:
+                    after_seq = int(payload.get('after'))
+                except Exception:
+                    after_seq = None
+            contains = payload.get('contains') if isinstance(payload.get('contains'), str) and payload.get('contains') else None
+            regex_raw = payload.get('regex')
+            if isinstance(regex_raw, str) and regex_raw:
+                try:
+                    # compile with IGNORECASE for user friendliness
+                    regex_pat = re.compile(regex_raw, re.IGNORECASE)
+                except Exception:
+                    regex_pat = None
+        if limit <= 0:
+            return json.dumps({'events': [], 'count': 0, 'nextCursor': after_seq, 'hasMore': False, 'truncated': False})
+        # snapshot current events to avoid mutation mid-iteration
+        try:
+            events_list = list(_recent_events)
+        except Exception:
+            events_list = []
+        if not events_list:
+            return json.dumps({'events': [], 'count': 0, 'nextCursor': after_seq, 'hasMore': False, 'truncated': False})
+        oldest_seq = None
+        newest_seq = None
+        try:
+            # sequences grow; earliest is first in deque
+            for e in events_list:
+                if 'seq' in e:
+                    oldest_seq = e['seq']
+                    break
+            for e in reversed(events_list):
+                if 'seq' in e:
+                    newest_seq = e['seq']
+                    break
+        except Exception:
+            pass
+        # detect truncation: client asked for after_seq older than what we kept
+        if after_seq is not None and oldest_seq is not None and after_seq < oldest_seq:
+            truncated = True
+        collected = []
+        # iterate forward (natural order) and pick events beyond constraints
+        for ev in events_list:
+            seq = ev.get('seq')
+            if after_seq is not None and seq is not None and seq <= after_seq:
+                continue
+            if terminal_id and ev.get('terminalId') != terminal_id:
+                continue
+            if since_ts and ev.get('ts') and ev['ts'] <= since_ts:
+                continue
+            if types and ev.get('type') not in types:
+                continue
+            txt_field = ev.get('text') or ev.get('hint') or ''
+            if contains and contains.lower() not in txt_field.lower():
+                continue
+            if regex_pat and not regex_pat.search(txt_field):
+                continue
+            collected.append(ev)
+            if len(collected) >= limit:
+                break
+        count = len(collected)
+        next_cursor = collected[-1]['seq'] if count and 'seq' in collected[-1] else after_seq
+        has_more = False
+        if newest_seq is not None and next_cursor is not None and next_cursor < newest_seq:
+            # More events exist after the last one we returned (even if filtered events ended early)
+            has_more = True
+        return json.dumps({
+            'events': collected,
+            'count': count,
+            'nextCursor': next_cursor,
+            'hasMore': has_more,
+            'truncated': truncated,
+            'oldestSeq': oldest_seq,
+            'newestSeq': newest_seq,
+            'applied': {
+                'terminalId': terminal_id,
+                'since_ts': since_ts,
+                'after': after_seq,
+                'types': list(types) if types else None,
+                'contains': contains,
+                'regex': regex_pat.pattern if regex_pat else None,
+                'limit': limit
+            }
+        })
